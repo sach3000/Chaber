@@ -1,5 +1,5 @@
 # ClickHelp
-## Remote control Desktop Windows over Internet
+## Remote control Desktop Windows over SSH gateway
  Source code C# / VisualStudio 2013 CE
 
 
