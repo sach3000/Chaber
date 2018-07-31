@@ -1,8 +1,8 @@
 # ClickHelp
-# Source code C#
-# VisualStudio 2013 CE
+## Remote control Desktop Windows over Internet
+ Source code C# / VisualStudio 2013 CE
 
-Remote control Desktop Windows over Internet
+
 
 Управление рабочим столом windows через Интернет.
 Вы для своей инфраструктуры разворачиваете ssh сервер и управляете вашими удаленными станциями (рабочими столами).
