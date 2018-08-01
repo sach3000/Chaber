@@ -1,51 +1,44 @@
-# ClickHelp
+#ClickHelp
 ## Remote control Desktop Windows over SSH gateway
- Source code C# / VisualStudio 2013 CE
+## Source code C # / VisualStudio 2013 CE
 
+Manage your windows desktop over the Internet. You for your infrastructure deploy ssh server and manage your remote stations (desktops). The idea is that when a large number of small branches, units, etc. VPN tunnels are not always installed with them. But to manage these machines there is always a need (through NAT), you deploy a gateway.
 
+The basis is Vnc through the SSH reverse tunnel.
 
-Управление рабочим столом windows через Интернет.
-Вы для своей инфраструктуры разворачиваете ssh сервер и управляете вашими удаленными станциями (рабочими столами).
-Идея в том, что когда большое кол-во мелких филиалов, подразделений и т.п. далеко не всегда с ними устанавливается VPN туннели. 
-Но управлять этими машины всегда есть необходимость (через НАТ), вы разворачиваете у себя шлюз.
+### The program consists of 2 parts:
+1. Client part.
+2. Gateway, SSH server, with the ability of GatewayPorts
+And the part of the administrator, viewer, acts any VNC viewer (I prefer TigthVNC), but it does not matter.
 
-В основе лежит Vnc через SSH обратный туннель.
+### How to deploy:
+Install on any Linux distribution, ssh server.
 
-### Программа состоит из 2-х частей:
+Settings are set from gateway / ssh_settings
 
-1. Клиентская часть. 
-2. Шлюз, SSH-сервер, с возможностью GatewayPorts
+In /portable/client/
+	ClickHelp.zip files /
+		..server.ini
+		..VNCHook.dll
+		..vncuser.pem
+		..WinVNC.exe
+	ClickHelp.exe
+	Renci.SshNet.dll
 
-Со стороны администратора, вьювера, выступает любой VNC viewer (Я предпочитаю TigthVNC), но без разницы.
+where in server.ini it is necessary to set (change) the parameters:
 
-### Как развернуть у себя:
+SSHServer = 111.11.11.11 - gateway address with ssh server
+SSHServerPort = 443 - port on which the ssh server listen
+LocalVncPortControl = 2211 - local port on the machine being started
+MinRandomPort = 40000 - port (start) for the generation that will be used for the ssh tunnel
+MaxRandomPort = 45550 - port (final)
 
-1. Устанавливаете на любом дистрибутиве Linux, ssh сервер.
-2. Настройки устанавливаете из gateway/ssh_settings
-3. В portable/client/ 
-	ClickHelp.zip
-		files/
-			..server.ini
-			..VNCHook.dll
-			..vncuser.pem
-			..WinVNC.exe
-		ClickHelp.exe
-		Renci.SshNet.dll
-где в server.ini необходимо установить(поменять) параметры:
+You pack the archive and send it to the client, or place it for downloading on your internal resource. The client part of the portable extract the archive to any place on the disk.
 
-	SSHServer=111.11.11.11  - адрес шлюза с ssh-сервером
-	SSHServerPort=443 - порт на котором слушает ssh-сервер
-	LocalVncPortControl=2211 - порт локальный на запускаемой машине
-	MinRandomPort=40000 - порт (стартовый) для генерации, который будет использоваться для ssh туннеля
-	MaxRandomPort=45550 - порт (конечный)
+The client unpacks the archive.
 
-Запаковываете архив и отправляете клиенту, или размещаете для скачивания на своем внутреннем ресурсе.
-Клиентская часть портабельная распаковываете архив в любое место на диске.
+Running ClickHelp.exe (the first, and only the first, must be mandatory from the Administrator)
 
-4. Клиент распаковывает архив.
-5. Запуск ClickHelp.exe (первый, и только первый, должен быть обязательно от Администратора)
-6. Клиент сообщает ID с формы
-7. Подключаетесь к клиенту по средствам любого VNC viewer - IPSshServer:Port, порт для подключения это последние 5 цифр от пароля.
-8. При запросе пароля, вы должны ввести полный пароль названный клиентом.
-
-
+The client reports the ID from the form
+Connect to the client by means of any VNC viewer - IPSshServer: Port, the connection port is the last 5 digits of the password.
+When prompting for a password, you must enter the full password named by the customer.
