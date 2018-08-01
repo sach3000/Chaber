@@ -1,7 +1,7 @@
-## Архив для распаковки у клиента, тот к кому подключаемся.
+## Archive for unpacking from the client, the one to whom we connect.
 
 ClickHelp.zip
-files/
+files /
 ..server.ini
 ..VNCHook.dll
 ..vncuser.pem
@@ -10,12 +10,12 @@ ClickHelp.exe
 Renci.SshNet.dll
 
 
-## Запуск и работа.
+## Running and running.
 
-Первый запуск на клиенте, должен обязательно от Администратора (Run as).
-Потому что добавляются несколько ключей в HKLM\ORL
-Дальнейшие запуски НЕ требуют админских привилегий.
+The first run on the client must be from the Administrator (Run as).
+Because several keys are added to HKLM \ ORL
+Further launches do NOT require admin privileges.
 
-Клиент запускает и диктует ID  с формы.
-Последние 5 цифр ID это номер порта для подлючения.
-Подключение к клиенту с любимого VNC viewerа
+The client starts and dictates the ID from the form.
+The last 5 digits ID is the port number for connection.
+Connecting to the client from your favorite VNC viewer
