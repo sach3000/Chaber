@@ -15,7 +15,7 @@ And the part of the administrator, viewer, acts any VNC viewer (I prefer TigthVN
 Install on any Linux distribution, ssh server.
 
 Settings are set from gateway / ssh_settings
-
+```ssh
 In /portable/client/
 	ClickHelp.zip files /
 		..server.ini
@@ -24,14 +24,14 @@ In /portable/client/
 		..WinVNC.exe
 	ClickHelp.exe
 	Renci.SshNet.dll
-
+```
 where in server.ini it is necessary to set (change) the parameters:
 
-SSHServer = 111.11.11.11 - gateway address with ssh server
-SSHServerPort = 443 - port on which the ssh server listen
-LocalVncPortControl = 2211 - local port on the machine being started
-MinRandomPort = 40000 - port (start) for the generation that will be used for the ssh tunnel
-MaxRandomPort = 45550 - port (final)
+- SSHServer = 111.11.11.11 - gateway address with ssh server
+- SSHServerPort = 443 - port on which the ssh server listen
+- LocalVncPortControl = 2211 - local port on the machine being started
+- MinRandomPort = 40000 - port (start) for the generation that will be used for the ssh tunnel
+- MaxRandomPort = 45550 - port (final)
 
 You pack the archive and send it to the client, or place it for downloading on your internal resource. The client part of the portable extract the archive to any place on the disk.
 
@@ -42,3 +42,6 @@ Running ClickHelp.exe (the first, and only the first, must be mandatory from the
 The client reports the ID from the form
 Connect to the client by means of any VNC viewer - IPSshServer: Port, the connection port is the last 5 digits of the password.
 When prompting for a password, you must enter the full password named by the customer.
+
+License
+MIT
