@@ -1,16 +1,16 @@
-Изменения в системе необходимые для подключения:
+Changes in the system necessary for connection:
 
-ОС Linux без разницы какой, главное это sshd который уже умеет GatewayPorts
+Linux OS no matter what, the main thing is sshd which already knows GatewayPorts
 
-1. Создать пользователя vncuser (с home и возможность логина), под ним будут создаваться туннели
-2. Добавить ключ ssh для пользователя vncuser (vncuser.pub)
+1. Create a user vncuser (with home and login), under it will be created tunnels
+2. Add the ssh key for the user vncuser (vncuser.pub)
 
-Для SSHD необходимо:
+For SSHD, you need:
 
-Port 443 - выбирайте какой удобно, обычно, 80, 443 всегда открыты на исходняк
+Port 443 - choose what is convenient, usually, 80, 443 are always open to the source
 PermitRootLogin no
 AllowTcpForwarding yes
 GatewayPorts yes
 
 
-Все остальные параметры как вам нравится.
+All other parameters as you like.
