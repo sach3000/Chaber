@@ -18,8 +18,11 @@ Settings are set from gateway / ssh_settings
 ```ssh
 In /portable/client/
 	ClickHelp.zip files /
+		..hookldr.exe
+		..sas.dll
+		..screenhooks32.dll
+		..screenhooks64.dll
 		..server.ini
-		..VNCHook.dll
 		..vncuser.pem
 		..WinVNC.exe
 	ClickHelp.exe

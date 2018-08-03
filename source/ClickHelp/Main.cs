@@ -329,144 +329,48 @@ namespace ClickHelp
             return cpu.Contains("64") ? true : false;
         }
 
-        private void AddVNCReg ()
+        //for VNC
+        private void AddVNCReg()
         {
             try
             {
                 using (RegistryKey hcu = Registry.CurrentUser.OpenSubKey(@"Software", true))
                 {
-                    if (hcu.OpenSubKey("ORL") != null) { hcu.DeleteSubKeyTree("ORL"); };
-                    hcu.CreateSubKey("ORL");
-                    hcu.CreateSubKey(@"ORL\WinVNC3");
+                    if (hcu.OpenSubKey("TightVNC") != null) { hcu.DeleteSubKeyTree("TightVNC"); };
+                    hcu.CreateSubKey("TightVNC");
+                    hcu.CreateSubKey(@"TightVNC\Server");
                 }
-                using (RegistryKey hcu = Registry.CurrentUser.OpenSubKey(@"Software\ORL\WinVNC3", true))
+                using (RegistryKey hcu = Registry.CurrentUser.OpenSubKey(@"Software\TightVNC\Server", true))
                 {
-                    hcu.SetValue("SocketConnect", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("AutoPortSelect", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("ConnectPriority", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("InputsEnabled", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("LocalInputsDisabled", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("IdleTimeout", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("LocalInputsPriorityTime", 3, RegistryValueKind.DWord);
-                    hcu.SetValue("QuerySetting", 4, RegistryValueKind.DWord);
-                    hcu.SetValue("QueryAccept", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("QueryAllowNoPass", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("QueryTimeout", 15, RegistryValueKind.DWord);
-                    hcu.SetValue("LockSetting", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("RemoveWallpaper", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("BlankScreen", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("AcceptHttpConnections", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("AcceptRfbConnections", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("AllowLoopback", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("AlwaysShared", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("BlockLocalInput", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("BlockRemoteInput", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("DisconnectAction", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("DisconnectClients", 0, RegistryValueKind.DWord);
                     hcu.SetValue("EnableFileTransfers", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("PollUnderCursor", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("PollForeground", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("PollFullScreen", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("OnlyPollConsole", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("OnlyPollOnEvent", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("DontSetHooks", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("DontUseDriver", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("DriverDirectAccess", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("LocalInputsPriority", 0, RegistryValueKind.DWord);
-                    hcu.SetValue("AuthRequired", 1, RegistryValueKind.DWord);
-                    hcu.SetValue("PollingCycle", 300, RegistryValueKind.DWord);
-                    hcu.SetValue("PortNumber", vncportclt, RegistryValueKind.DWord);
-                    hcu.SetValue("DisableTrayIcon", 1, RegistryValueKind.DWord);
-                    // hcu.SetValue("Password", new byte[] { 157, 40, 154, 235, 166, 95, 243, 175 }, RegistryValueKind.Binary);
+                    hcu.SetValue("EnableUrlParams", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("GrabTransparentWindows", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("GrabTransparentWindows", 1, RegistryValueKind.DWord);
                     hcu.SetValue("Password", EncryptVNC(PassVNC), RegistryValueKind.Binary);
-                    // hcu.SetValue("PasswordViewOnly", new byte[] { 157, 40, 154, 235, 166, 95, 243, 175 }, RegistryValueKind.Binary);
                     hcu.SetValue("PasswordViewOnly", EncryptVNC(PassVNC), RegistryValueKind.Binary);
-                }
-                if (Isx64())
-                {
-                    using (RegistryKey hklm = Registry.LocalMachine.OpenSubKey(@"Software\Wow6432Node", false))
-                    {
-                        if (hklm.OpenSubKey("ORL") == null) 
-                        {
-                            try
-                            {
-                                RegistryKey hklm1 = Registry.LocalMachine.OpenSubKey(@"Software\Wow6432Node", true);
-                                //hklm.DeleteSubKeyTree("ORL");
-                                hklm1.CreateSubKey("ORL");
-                                hklm1.CreateSubKey(@"ORL\WinVNC3");
-                                hklm1.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                                using (StreamWriter sw = File.AppendText(logf))
-                                { sw.WriteLine("Error: " + ex.Message); }
-                            }
-                        };
-                    }
-                    using (RegistryKey hklm = Registry.LocalMachine.OpenSubKey(@"Software\Wow6432Node\ORL", false))
-                    {
-                        var val = hklm.OpenSubKey("WinVNC3").GetValue("AllowLoopback");
-                        if (val == null)
-                        {
-                            try
-                            {
-                                RegistryKey hklm1 = Registry.LocalMachine.OpenSubKey(@"Software\Wow6432Node\ORL\WinVNC3", true);
-                                hklm1.SetValue("AllowLoopback", 1, RegistryValueKind.DWord);
-                                hklm1.SetValue("EnableHHTPDaemon", 0, RegistryValueKind.DWord);
-                                hklm1.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                                using (StreamWriter sw = File.AppendText(logf))
-                                { sw.WriteLine("Error: " + ex.Message); }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    using (RegistryKey hklm = Registry.LocalMachine.OpenSubKey(@"Software", false))
-                    {
-                        if (hklm.OpenSubKey("ORL") == null)
-                        {
-                            try
-                            {
-                                RegistryKey hklm1 = Registry.LocalMachine.OpenSubKey(@"Software", true);
-                                //hklm.DeleteSubKeyTree("ORL");
-                                hklm1.CreateSubKey("ORL");
-                                hklm1.CreateSubKey(@"ORL\WinVNC3");
-                                hklm1.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                                using (StreamWriter sw = File.AppendText(logf))
-                                { sw.WriteLine("Error: " + ex.Message); }
-                            }
-                        };
-                    }
-                    using (RegistryKey hklm = Registry.LocalMachine.OpenSubKey(@"Software\ORL", false))
-                    {
-                        var val = hklm.OpenSubKey("WinVNC3").GetValue("AllowLoopback");
-                        if (val == null)
-                        {
-                            try
-                            {
-                                RegistryKey hklm1 = Registry.LocalMachine.OpenSubKey(@"Software\ORL\WinVNC3", true);
-                                hklm1.SetValue("AllowLoopback", 1, RegistryValueKind.DWord);
-                                hklm1.SetValue("EnableHHTPDaemon", 0, RegistryValueKind.DWord);
-                                hklm1.SetValue("ConnectPriority", 1, RegistryValueKind.DWord);
-                                hklm1.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                                using (StreamWriter sw = File.AppendText(logf))
-                                { sw.WriteLine("Error: " + ex.Message); }
-                            }
-                        }
-                    }
+                    hcu.SetValue("QueryAcceptOnTimeout", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("QueryTimeout", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("RemoveWallpaper", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("RfbPort", vncportclt, RegistryValueKind.DWord);
+                    hcu.SetValue("RunControlInterface", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("UseControlAuthentication", 0, RegistryValueKind.DWord);
+                    hcu.SetValue("UseMirrorDriver", 1, RegistryValueKind.DWord);
+                    hcu.SetValue("UseVncAuthentication", 1, RegistryValueKind.DWord);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 using (StreamWriter sw = File.AppendText(logf))
-                { 
+                {
                     sw.WriteLine("Error: " + ex.Message);
                     foreach (Process proc in Process.GetProcessesByName("WinVNC"))
                     {
@@ -475,7 +379,7 @@ namespace ClickHelp
                     System.Threading.Thread.Sleep(500);
                     this.Close();
                 }
-                
+
             }
         }
 
